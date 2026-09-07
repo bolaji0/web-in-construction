@@ -249,7 +249,6 @@
     </div>
 
     <script>
-        // --- Interactive Particle System ---
         const canvas = document.getElementById('particleCanvas');
         const ctx = canvas.getContext('2d');
 
@@ -309,6 +308,6 @@
                 ctx.fillStyle = properties.particleColor;
 ctx.fill();}}function drawLines() {for (let i = 0; i < particles.length; i++) {for (let j = i + 1; j < particles.length; j++) {const distance = Math.sqrt(Math.pow(particles[i].x - particles[j].x, 2) + Math.pow(particles[i].y - particles[j].y, 2));if (distance < properties.lineLength) {ctx.beginPath();ctx.moveTo(particles[i].x, particles[i].y);ctx.lineTo(particles[j].x, particles[j].y);ctx.closePath();ctx.strokeStyle = properties.lineColor;ctx.lineWidth = 0.8;ctx.stroke();}}// Mouse interactive connection
                                                                                const mouseDistance = Math.sqrt(Math.pow(particles[i].x - mouse.x, 2) + Math.pow(particles[i].y - mouse.y, 2));if (mouseDistance < properties.lineLength + 30) {ctx.beginPath();ctx.moveTo(particles[i].x, particles[i].y);ctx.lineTo(mouse.x, mouse.y);ctx.closePath();ctx.strokeStyle = rgba(0, 242, 254, ${(1 - mouseDistance/(properties.lineLength + 30)) * 0.25});ctx.lineWidth = 1;ctx.stroke();}}}function initParticles() {for (let i = 0; i < properties.particleCount; i++) {particles.push(new Particle());}}function loop() {ctx.clearRect(0, 0, width, height);drawLines();particles.forEach(p => {p.position();p.draw();});requestAnimationFrame(loop);}initParticles();loop();
-      // --- 3D Glassmorphic Card Tilt Effect ---
+   
       const card = document.getElementById('tiltCard');window.addEventListener('mousemove', (e) => {if(window.innerWidth > 768) {const xAxis = (window.innerWidth / 2 - e.clientX) / 25;const yAxis = (window.innerHeight / 2 - e.clientY) / 25;card.style.transform = rotateY(${xAxis}deg) rotateX(${-yAxis}deg);}});window.addEventListener('mouseenter', () => {card.style.transition = 'none';});window.addEventListener('mouseleave', () => {card.style.transition = 'transform 0.5s ease';card.style.transform = rotateY(0deg) rotateX(0deg);});//
       --- Modal Interactions ---const modal = document.getElementById('modalOverlay');const openBtn = document.getElementById('openFormBtn');const closeBtn = document.getElementById('closeFormBtn');function toggleModal() {modal.classList.toggle('active');}openBtn.addEventListener('click', (e) => { e.preventDefault(); toggleModal(); });closeBtn.addEventListener('click', toggleModal);modal.addEventListener('click', (e) => { if(e.target === modal) toggleModal(); });
