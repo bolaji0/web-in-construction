@@ -1,152 +1,314 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ketee Jjsr | Software Engineer</title>
+    <style>
+        :root {
+            --bg-color: #0a0a0c;
+            --primary-glow: #00f2fe;
+            --secondary-glow: #4facfe;
+            --text-main: #ffffff;
+            --text-muted: #8a8a93;
+        }
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: '-apple-system', BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        body, html {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            overflow: hidden;
+            width: 100%;
+            height: 100%;
+            perspective: 1000px;
+        }
 
-  <link rel="stylesheet" href="styles.css">
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
 
-  <title>Portfolio</title>
+        .main-container {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            text-align: center;
+            background: radial-gradient(circle at center, transparent 20%, rgba(10, 10, 12, 0.8) 80%);
+        }
+
+        .hero-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            padding: 3rem;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            transform: style 3d;
+            transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+        }
+
+        .hero-card:hover {
+            box-shadow: 0 40px 80px rgba(0, 242, 254, 0.15),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--text-main) 30%, var(--primary-glow));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        p.title {
+            font-size: 1.25rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 2rem;
+        }
+
+        .cta-btn {
+            position: relative;
+            background: linear-gradient(135deg, var(--secondary-glow), var(--primary-glow));
+            color: #000;
+            font-weight: 600;
+            border: none;
+            padding: 1rem 2.5rem;
+            font-size: 1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 0 20px rgba(0, 242, 254, 0.4);
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 35px rgba(0, 242, 254, 0.7);
+        }
+
+        /* Seamless Modal Overlay for Connect Form */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(5, 5, 8, 0.9);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            z-index: 10;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            padding: 1.5rem;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .form-container {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 2.5rem;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 450px;
+            transform: scale(0.9) translateY(20px);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .modal-overlay.active .form-container {
+            transform: scale(1) translateY(0);
+        }
+
+        .form-container h2 {
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+            letter-spacing: -0.5px;
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+        .input-group input, .input-group textarea {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: #fff;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s, background 0.3s;
+        }
+
+        .input-group input:focus, .input-group textarea:focus {
+            border-color: var(--primary-glow);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .input-group textarea {
+            height: 120px;
+            resize: none;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+        }
+
+        .btn-close {
+            background: transparent;
+            color: var(--text-muted);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn-close:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+        }
+
+        /* Responsive Scaling */
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            p.title { font-size: 1rem; letter-spacing: 2px; }
+            .hero-card { padding: 2rem 1.5rem; }
+        }
+    </style>
 </head>
 <body>
-  <!-- NAVBAR -->
-  <nav>
-    <div class="left">
-      <a href="/">M. Fathiu</a>
+
+    <canvas id="particleCanvas"></canvas>
+
+    <div class="main-container">
+        <div class="hero-card" id="tiltCard">
+            <h1>Ketee Jjsr</h1>
+            <p class="title">Software Engineer</p>
+            <a href="#" class="cta-btn" id="openFormBtn">Let's Connect</a>
+        </div>
     </div>
 
-    <div class="right">
-      <a href="http://github.com/bolaji0" target="_blank" rel="noopener noreferrer">
-        <i class="fa-brands fa-github"></i>
-        <span>Github</span>
-      </a>
-      
-      <a href="https://www.linkedin.com/in/mustapha-fathiu-7a85a422b" target="_blank" rel="noopener noreferrer">
-        <i class="fa-brands fa-linkedin"></i>
-        <span>Linkedin</span>
-      </a>
-      
-      <a href="mailto:bjmustapha48@gmail.com">
-        <i class="fa-solid fa-envelope"></i>
-        <span>Email</span>
-      </a>
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="form-container">
+            <h2>Let's build something epic.</h2>
+            <form id="connectForm" onsubmit="event.preventDefault(); alert('Message sent simulated!'); toggleModal();">
+                <div class="input-group">
+                    <input type="text" placeholder="Your Name" required>
+                </div>
+                <div class="input-group">
+                    <input type="email" placeholder="Your Email" required>
+                </div>
+                <div class="input-group">
+                    <textarea placeholder="Tell me about your vision..." required></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn-close" id="closeFormBtn">Cancel</button>
+                    <button type="submit" class="cta-btn" style="padding: 0.75rem 2rem; box-shadow: none;">Send</button>
+                </div>
+            </form>
+        </div>
     </div>
-  </nav>
 
-  <main>
-    <!-- SECTION 1: Hero -->
-    <section class="hero-section">
-      <div class="text">
-        <h2>Hi, I'm Fathiu 👋</h2>
-        <p> Software Engineering student with a .NET background, now building full-stack products with React and Supabase. I care about clean interfaces backed by solid systems thinking. </p>
+    <script>
+        // --- Interactive Particle System ---
+        const canvas = document.getElementById('particleCanvas');
+        const ctx = canvas.getContext('2d');
 
-        <div class="links">
-          <a href="#skills">
-            <i class="fa-solid fa-code"></i>
-            <span>Skills</span>
-          </a>
-          
-          <a href="#testimony">
-            <i class="fa-solid fa-pen"></i>
-            <span>Testimony</span>
-          </a>
-          
-          <a href="#contact">
-            <i class="fa-solid fa-envelope"></i>
-            <span>Contact</span>
-          </a>
-        </div>
-      </div>
+        let width = canvas.width = window.innerWidth;
+        let height = canvas.height = window.innerHeight;
 
-      <div class="headshot">
-        <img src="images/IMG_1492.png" alt="john doe headshot">
-      </div>
-    </section>
+        const particles = [];
+        const properties = {
+            bgColor: '#0a0a0c',
+            particleColor: 'rgba(0, 242, 254, 0.65)',
+            lineColor: 'rgba(79, 172, 254, 0.15)',
+            particleRadius: 2.5,
+            particleCount: (width < 768) ? 40 : 100,
+            maxVelocity: 0.6,
+            lineLength: 140
+        };
 
-    <!-- SECTION 2: Skills -->
-    <section id="skills" class="skills-section">
-      <h2>Skills</h2>
-      <div class="text">
-       My journey into software started with a 6-month intensive bootcamp, where I learned the fundamentals across HTML, CSS, React, and .NET. From there, I sharpened my .NET skills professionally, working as a .NET developer at Nupat Technologies and Walure Capital, building real-world backend systems in production environments.On the frontend side, I've kept building — putting together several React projects to deepen my skills, including Bolaji Social, a full-stack Reddit-inspired social platform built with React, Supabase, and TanStack Query. I've also taken projects from concept to production entirely on my own, like EcoChargeLighter, an e-commerce store I built, configured, and launched end-to-end — from domain purchase to a converting storefront.
-       Today, I'm channeling that backend foundation into frontend craft, with React and modern JavaScript at the center of what I build.
-      </div>
+        const mouse = { x: width / 2, y: height / 2 };
 
-      <div class="cells">
-        <div class="cell">
-          <img src="images/html-logo.webp" alt="html logo">
-          <span>HTML</span>
-        </div>
-        
-        <div class="cell">
-          <img src="images/css-logo.webp" alt="css logo">
-          <span>CSS</span>
-        </div>
-        
-        <div class="cell">
-          <img src="images/javascript-logo.webp" alt="javascript logo">
-          <span>JavaScript</span>
-        </div>
-        
-        <div class="cell">
-          <img src="images/node-logo.webp" alt="node logo">
-          <span>Node.js</span>
-        </div>
-        
-        <div class="cell">
-          <img src="images/react-logo.webp" alt="react logo">
-          <span>React.js</span>
-        </div>
-      </div>
-    </section>
+        window.addEventListener('resize', () => {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+            properties.particleCount = (width < 768) ? 40 : 100;
+        });
 
-    <!-- SECTION 3: Testimony -->
-    <section id="testimony" class="testimony-section">
-      <h2>Testimony</h2>
+        window.addEventListener('mousemove', (e) => {
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
+        });
 
-      <div class="group">
-        <div class="person-details">
-          <img src="images/IMG_1041.PNG">
-          <p>Olamilekan Adeite</p>
-          <p>Owner, EcoChargeLighter</p>
-        </div>
+        window.addEventListener('touchmove', (e) => {
+            if(e.touches.length > 0) {
+                mouse.x = e.touches[0].clientX;
+                mouse.y = e.touches[0].clientY;
+            }
+        });
 
-        <div class="text">
-          "We came to Fathiu with just an idea and a product — no site, no domain, nothing. He took it from zero to a fully working e-commerce store, handling everything from setup to launch. The site has converted incredibly well since going live, and he was reliable and easy to work with throughout. Couldn't have asked for a smoother build. <a href="https://ecochargelighter.com.ng/">Ecochargerlighter.com.ng</a> "
-        </div>
-      </div>
-    </section>
+        class Particle {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.velocityX = (Math.random() * (properties.maxVelocity * 2)) - properties.maxVelocity;
+                this.velocityY = (Math.random() * (properties.maxVelocity * 2)) - properties.maxVelocity;
+            }
 
-    <!-- SECTION 4: Contact -->
-    <section id="contact" class="contact-section">
-      <h2>Contact</h2>
+            position() {
+                if (this.x + this.velocityX > width || this.x + this.velocityX < 0) this.velocityX = -this.velocityX;
+                if (this.y + this.velocityY > height || this.y + this.velocityY < 0) this.velocityY = -this.velocityY;
+                this.x += this.velocityX;
+                this.y += this.velocityY;
+            }
 
-      <div class="group">
-        <div class="text">
-          Got a project in mind, a role you think I'd be a great fit for, or just a question about my work? I'd love to hear from you — drop a message in the form and I'll usually get back to you within a day or two. You can also find me on GitHub or LinkedIn if you'd rather connect there.
-        </div>
-
-        <form action="https://formsubmit.co/bjmustapha48@gmail.com" method="POST">
-        <label for="name">Name</label>
-        <input type="text" id="name" name="name" required>
-      
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email" required>
-      
-        <label for="message">Message</label>
-        <textarea id="message" name="message" cols="30" rows="10" required></textarea>
-      
-        <button type="submit">Send Message</button>
-      </form>
-        
-      </div>
-    </section>
-  </main>
-</body>
-</html>
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, properties.particleRadius, 0, Math.PI * 2);
+                ctx.closePath();
+                ctx.fillStyle = properties.particleColor;
+ctx.fill();}}function drawLines() {for (let i = 0; i < particles.length; i++) {for (let j = i + 1; j < particles.length; j++) {const distance = Math.sqrt(Math.pow(particles[i].x - particles[j].x, 2) + Math.pow(particles[i].y - particles[j].y, 2));if (distance < properties.lineLength) {ctx.beginPath();ctx.moveTo(particles[i].x, particles[i].y);ctx.lineTo(particles[j].x, particles[j].y);ctx.closePath();ctx.strokeStyle = properties.lineColor;ctx.lineWidth = 0.8;ctx.stroke();}}// Mouse interactive connection
+                                                                               const mouseDistance = Math.sqrt(Math.pow(particles[i].x - mouse.x, 2) + Math.pow(particles[i].y - mouse.y, 2));if (mouseDistance < properties.lineLength + 30) {ctx.beginPath();ctx.moveTo(particles[i].x, particles[i].y);ctx.lineTo(mouse.x, mouse.y);ctx.closePath();ctx.strokeStyle = rgba(0, 242, 254, ${(1 - mouseDistance/(properties.lineLength + 30)) * 0.25});ctx.lineWidth = 1;ctx.stroke();}}}function initParticles() {for (let i = 0; i < properties.particleCount; i++) {particles.push(new Particle());}}function loop() {ctx.clearRect(0, 0, width, height);drawLines();particles.forEach(p => {p.position();p.draw();});requestAnimationFrame(loop);}initParticles();loop();
+      // --- 3D Glassmorphic Card Tilt Effect ---
+      const card = document.getElementById('tiltCard');window.addEventListener('mousemove', (e) => {if(window.innerWidth > 768) {const xAxis = (window.innerWidth / 2 - e.clientX) / 25;const yAxis = (window.innerHeight / 2 - e.clientY) / 25;card.style.transform = rotateY(${xAxis}deg) rotateX(${-yAxis}deg);}});window.addEventListener('mouseenter', () => {card.style.transition = 'none';});window.addEventListener('mouseleave', () => {card.style.transition = 'transform 0.5s ease';card.style.transform = rotateY(0deg) rotateX(0deg);});//
+      --- Modal Interactions ---const modal = document.getElementById('modalOverlay');const openBtn = document.getElementById('openFormBtn');const closeBtn = document.getElementById('closeFormBtn');function toggleModal() {modal.classList.toggle('active');}openBtn.addEventListener('click', (e) => { e.preventDefault(); toggleModal(); });closeBtn.addEventListener('click', toggleModal);modal.addEventListener('click', (e) => { if(e.target === modal) toggleModal(); });
