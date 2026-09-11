@@ -17,7 +17,7 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: '-apple-system', BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
 
         body, html {
@@ -64,250 +64,18 @@
             width: 100%;
             box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4),
                         inset 0 1px 0 rgba(255, 255, 255, 0.1);
-            transform: style 3d;
-            transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
-        }
-
-        .hero-card:hover {
-            box-shadow: 0 40px 80px rgba(0, 242, 254, 0.15),
-                        inset 0 1px 0 rgba(255, 255, 255, 0.2);
-        }
-
-        h1 {
-            font-size: 3.5rem;
-            font-weight: 800;
-            letter-spacing: -1px;
-            margin-bottom: 0.5rem;
-            background: linear-gradient(135deg, var(--text-main) 30%, var(--primary-glow));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        p.title {
-            font-size: 1.25rem;
-            font-weight: 500;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            margin-bottom: 2rem;
-        }
-
-        .cta-btn {
-            position: relative;
-            background: linear-gradient(135deg, var(--secondary-glow), var(--primary-glow));
-            color: #000;
-            font-weight: 600;
-            border: none;
-            padding: 1rem 2.5rem;
-            font-size: 1rem;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-            box-shadow: 0 0 20px rgba(0, 242, 254, 0.4);
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .cta-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 0 35px rgba(0, 242, 254, 0.7);
-        }
-
-        /* Seamless Modal Overlay for Connect Form */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(5, 5, 8, 0.9);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            z-index: 10;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            padding: 1.5rem;
-        }
-
-        .modal-overlay.active {
-            opacity: 1;
-            pointer-events: all;
-        }
-
-        .form-container {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 2.5rem;
-            border-radius: 20px;
-            width: 100%;
-            max-width: 450px;
-            transform: scale(0.9) translateY(20px);
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .modal-overlay.active .form-container {
-            transform: scale(1) translateY(0);
-        }
-
-        .form-container h2 {
-            margin-bottom: 1.5rem;
-            font-size: 2rem;
-            letter-spacing: -0.5px;
-        }
-
-        .input-group {
-            position: relative;
-            margin-bottom: 1.5rem;
-        }
-
-        .input-group input, .input-group textarea {
-            width: 100%;
-            padding: 1rem;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            color: #fff;
-            font-size: 1rem;
-            outline: none;
-            transition: border-color 0.3s, background 0.3s;
-        }
-
-        .input-group input:focus, .input-group textarea:focus {
-            border-color: var(--primary-glow);
-            background: rgba(255, 255, 255, 0.08);
-        }
-
-        .input-group textarea {
-            height: 120px;
-            resize: none;
-        }
-
-        .form-actions {
-            display: flex;
-            gap: 1rem;
-            justify-content: flex-end;
-        }
-
-        .btn-close {
-            background: transparent;
-            color: var(--text-muted);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 0.75rem 1.5rem;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-
-        .btn-close:hover {
-            background: rgba(255, 255, 255, 0.1);
-            color: #fff;
-        }
-
-        /* Responsive Scaling */
-        @media (max-width: 768px) {
-            h1 { font-size: 2.5rem; }
-            p.title { font-size: 1rem; letter-spacing: 2px; }
-            .hero-card { padding: 2rem 1.5rem; }
+            transform-style: preserve-3d;
+            transition: transform 0.3s ease;
         }
     </style>
 </head>
 <body>
-
-    <canvas id="particleCanvas"></canvas>
-
+    <canvas></canvas>
     <div class="main-container">
-        <div class="hero-card" id="tiltCard">
+        <div class="hero-card">
             <h1>Mustapha Fathiu</h1>
-            <p class="title">Software Engineer</p>
-            <a href="#" class="cta-btn" id="openFormBtn">Let's Connect</a>
+            <p>Software Engineer</p>
         </div>
     </div>
-
-    <div class="modal-overlay" id="modalOverlay">
-        <div class="form-container">
-            <h2>Let's build something epic.</h2>
-            <form id="connectForm" onsubmit="event.preventDefault(); alert('Message sent simulated!'); toggleModal();">
-                <div class="input-group">
-                    <input type="text" placeholder="Your Name" required>
-                </div>
-                <div class="input-group">
-                    <input type="email" placeholder="Your Email" required>
-                </div>
-                <div class="input-group">
-                    <textarea placeholder="Tell me about your vision..." required></textarea>
-                </div>
-                <div class="form-actions">
-                    <button type="button" class="btn-close" id="closeFormBtn">Cancel</button>
-                    <button type="submit" class="cta-btn" style="padding: 0.75rem 2rem; box-shadow: none;">Send</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <script>
-        const canvas = document.getElementById('particleCanvas');
-        const ctx = canvas.getContext('2d');
-
-        let width = canvas.width = window.innerWidth;
-        let height = canvas.height = window.innerHeight;
-
-        const particles = [];
-        const properties = {
-            bgColor: '#0a0a0c',
-            particleColor: 'rgba(0, 242, 254, 0.65)',
-            lineColor: 'rgba(79, 172, 254, 0.15)',
-            particleRadius: 2.5,
-            particleCount: (width < 768) ? 40 : 100,
-            maxVelocity: 0.6,
-            lineLength: 140
-        };
-
-        const mouse = { x: width / 2, y: height / 2 };
-
-        window.addEventListener('resize', () => {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
-            properties.particleCount = (width < 768) ? 40 : 100;
-        });
-
-        window.addEventListener('mousemove', (e) => {
-            mouse.x = e.clientX;
-            mouse.y = e.clientY;
-        });
-
-        window.addEventListener('touchmove', (e) => {
-            if(e.touches.length > 0) {
-                mouse.x = e.touches[0].clientX;
-                mouse.y = e.touches[0].clientY;
-            }
-        });
-
-        class Particle {
-            constructor() {
-                this.x = Math.random() * width;
-                this.y = Math.random() * height;
-                this.velocityX = (Math.random() * (properties.maxVelocity * 2)) - properties.maxVelocity;
-                this.velocityY = (Math.random() * (properties.maxVelocity * 2)) - properties.maxVelocity;
-            }
-
-            position() {
-                if (this.x + this.velocityX > width || this.x + this.velocityX < 0) this.velocityX = -this.velocityX;
-                if (this.y + this.velocityY > height || this.y + this.velocityY < 0) this.velocityY = -this.velocityY;
-                this.x += this.velocityX;
-                this.y += this.velocityY;
-            }
-
-            draw() {
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, properties.particleRadius, 0, Math.PI * 2);
-                ctx.closePath();
-                ctx.fillStyle = properties.particleColor;
-ctx.fill();}}function drawLines() {for (let i = 0; i < particles.length; i++) {for (let j = i + 1; j < particles.length; j++) {const distance = Math.sqrt(Math.pow(particles[i].x - particles[j].x, 2) + Math.pow(particles[i].y - particles[j].y, 2));if (distance < properties.lineLength) {ctx.beginPath();ctx.moveTo(particles[i].x, particles[i].y);ctx.lineTo(particles[j].x, particles[j].y);ctx.closePath();ctx.strokeStyle = properties.lineColor;ctx.lineWidth = 0.8;ctx.stroke();}}// Mouse interactive connection
-                                                                               const mouseDistance = Math.sqrt(Math.pow(particles[i].x - mouse.x, 2) + Math.pow(particles[i].y - mouse.y, 2));if (mouseDistance < properties.lineLength + 30) {ctx.beginPath();ctx.moveTo(particles[i].x, particles[i].y);ctx.lineTo(mouse.x, mouse.y);ctx.closePath();ctx.strokeStyle = rgba(0, 242, 254, ${(1 - mouseDistance/(properties.lineLength + 30)) * 0.25});ctx.lineWidth = 1;ctx.stroke();}}}function initParticles() {for (let i = 0; i < properties.particleCount; i++) {particles.push(new Particle());}}function loop() {ctx.clearRect(0, 0, width, height);drawLines();particles.forEach(p => {p.position();p.draw();});requestAnimationFrame(loop);}initParticles();loop();
-   
-      const card = document.getElementById('tiltCard');window.addEventListener('mousemove', (e) => {if(window.innerWidth > 768) {const xAxis = (window.innerWidth / 2 - e.clientX) / 25;const yAxis = (window.innerHeight / 2 - e.clientY) / 25;card.style.transform = rotateY(${xAxis}deg) rotateX(${-yAxis}deg);}});window.addEventListener('mouseenter', () => {card.style.transition = 'none';});window.addEventListener('mouseleave', () => {card.style.transition = 'transform 0.5s ease';card.style.transform = rotateY(0deg) rotateX(0deg);});//
-      --- Modal Interactions ---const modal = document.getElementById('modalOverlay');const openBtn = document.getElementById('openFormBtn');const closeBtn = document.getElementById('closeFormBtn');function toggleModal() {modal.classList.toggle('active');}openBtn.addEventListener('click', (e) => { e.preventDefault(); toggleModal(); });closeBtn.addEventListener('click', toggleModal);modal.addEventListener('click', (e) => { if(e.target === modal) toggleModal(); });
+</body>
+</html>
