@@ -6,11 +6,13 @@
     <title>Mustapha Fathiu | Software Engineer</title>
     <style>
         :root {
-            --bg-color: #0a0a0c;
+            --bg-color: #060608;
             --primary-glow: #00f2fe;
             --secondary-glow: #4facfe;
             --text-main: #ffffff;
             --text-muted: #8a8a93;
+            --form-bg: rgba(255, 255, 255, 0.02);
+            --border-color: rgba(255, 255, 255, 0.08);
         }
 
         * {
@@ -23,14 +25,14 @@
         body, html {
             background-color: var(--bg-color);
             color: var(--text-main);
-            overflow: hidden;
             width: 100%;
             height: 100%;
-            perspective: 1000px;
+            overflow-x: hidden;
+            perspective: 1200px;
         }
 
         canvas {
-            position: absolute;
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
@@ -43,39 +45,248 @@
             position: relative;
             z-index: 2;
             width: 100%;
-            height: 100%;
+            min-height: 100vh;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
             padding: 2rem;
-            text-align: center;
-            background: radial-gradient(circle at center, transparent 20%, rgba(10, 10, 12, 0.8) 80%);
+            background: radial-gradient(circle at center, transparent 30%, rgba(6, 6, 8, 0.9) 90%);
         }
 
         .hero-card {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 24px;
-            padding: 3rem;
-            max-width: 600px;
+            background: rgba(255, 255, 255, 0.01);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border-color);
+            border-radius: 28px;
+            padding: 3.5rem 2.5rem;
+            max-width: 480px;
             width: 100%;
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4),
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.7),
                         inset 0 1px 0 rgba(255, 255, 255, 0.1);
             transform-style: preserve-3d;
-            transition: transform 0.3s ease;
+            transition: transform 0.1s linear;
+        }
+
+        .hero-card h1 {
+            font-size: 2.4rem;
+            font-weight: 800;
+            letter-spacing: -0.05em;
+            margin-bottom: 0.3rem;
+            background: linear-gradient(135deg, var(--text-main) 40%, var(--text-muted));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            transform: translateZ(60px);
+        }
+
+        .hero-card .subtitle {
+            font-size: 1rem;
+            color: var(--secondary-glow);
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 2.5rem;
+            transform: translateZ(40px);
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+            transform: translateZ(30px);
+            text-align: left;
+        }
+
+        .form-group {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group input, 
+        .form-group textarea {
+            width: 100%;
+            padding: 0.9rem 1.1rem;
+            background: var(--form-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            color: var(--text-main);
+            font-size: 0.95rem;
+            outline: none;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .form-group textarea {
+            resize: none;
+            height: 100px;
+        }
+
+        .form-group input:focus, 
+        .form-group textarea:focus {
+            border-color: var(--primary-glow);
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.15);
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .form-group label {
+            position: absolute;
+            left: 1.1rem;
+            top: 0.9rem;
+            color: var(--text-muted);
+            transition: all 0.25s ease;
+            pointer-events: none;
+            font-size: 0.95rem;
+        }
+
+        .form-group input:focus ~ label,
+        .form-group input:not(:placeholder-shown) ~ label,
+        .form-group textarea:focus ~ label,
+        .form-group textarea:not(:placeholder-shown) ~ label {
+            top: -0.6rem;
+            left: 0.8rem;
+            font-size: 0.75rem;
+            padding: 0 0.4rem;
+            background: #060608;
+            color: var(--primary-glow);
+            border-radius: 4px;
+        }
+
+        .submit-btn {
+            margin-top: 0.5rem;
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--secondary-glow), var(--primary-glow));
+            border: none;
+            border-radius: 12px;
+            color: #000000;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0, 242, 254, 0.2);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(0, 242, 254, 0.4);
+        }
+
+        .submit-btn:active {
+            transform: translateY(1px);
         }
     </style>
 </head>
 <body>
-    <canvas></canvas>
+    <canvas id="particleCanvas"></canvas>
     <div class="main-container">
-        <div class="hero-card">
+        <div class="hero-card" id="heroCard">
             <h1>Mustapha Fathiu</h1>
-            <p>Software Engineer</p>
+            <p class="subtitle">Software Engineer</p>
+            
+            <!-- Ready for your action or backend URL mapping -->
+            <form class="contact-form" id="contactForm">
+                <div class="form-group">
+                    <input type="text" id="name" placeholder=" " required autocomplete="off">
+                    <label for="name">Full Name</label>
+                </div>
+                <div class="form-group">
+                    <input type="email" id="email" placeholder=" " required autocomplete="off">
+                    <label for="email">Email Address</label>
+                </div>
+                <div class="form-group">
+                    <input type="tel" id="phone" placeholder=" " required autocomplete="off">
+                    <label for="phone">Phone Number</label>
+                </div>
+                <div class="form-group">
+                    <textarea id="message" placeholder=" " required></textarea>
+                    <label for="message">Your Message</label>
+                </div>
+                <button type="submit" class="submit-btn">Send Message</button>
+            </form>
         </div>
     </div>
-</body>
-</html>
+
+    <script>
+        // --- 1. HARWARE-ACCELERATED 3D CARD TILT ---
+        const card = document.getElementById('heroCard');
+        const container = document.body;
+
+        container.addEventListener('mousemove', (e) => {
+            const { clientX: mouseX, clientY: mouseY } = e;
+            const { innerWidth: width, innerHeight: height } = window;
+
+            // Strict degree range limits grid clipping issues inside form fields
+            const xAxis = ((width / 2) - mouseX) / (width / 20);
+            const yAxis = (mouseY - (height / 2)) / (height / 20);
+
+            card.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+        });
+
+        container.addEventListener('mouseleave', () => {
+            card.style.transform = 'rotateY(0deg) rotateX(0deg)';
+            card.style.transition = 'transform 0.4s ease';
+        });
+
+        container.addEventListener('mouseenter', () => {
+            card.style.transition = 'none';
+        });
+
+
+        // --- 2. HIGH-PERFORMANCE NEURAL NET BACKGROUND ---
+        const canvas = document.getElementById('particleCanvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        const maxParticles = 60; 
+        const connectionDistance = 110;
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.vx = (Math.random() - 0.5) * 0.5;
+                this.vy = (Math.random() - 0.5) * 0.5;
+                this.radius = Math.random() * 1.5 + 1;
+            }
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(79, 172, 254, 0.4)';
+                ctx.fill();
+            }
+        }
+
+        for (let i = 0; i < maxParticles; i++) {
+            particles.push(new Particle());
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    if (distance < connectionDistance) {
+                        const alpha = (1 - (distance / connectionDistance)) * 0.12;
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.strokeStyle = `rgba(0, 242, 254, ${alpha})`;
+                        ctx.stroke();
+                    }
+                }
+            }
