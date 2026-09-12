@@ -1,257 +1,238 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mustapha Fathiu | Software Engineer</title>
-    <style>
-        :root {
-            --bg-color: #060608;
-            --primary-glow: #00f2fe;
-            --secondary-glow: #4facfe;
-            --text-main: #ffffff;
-            --text-muted: #8a8a93;
-            --form-bg: rgba(255, 255, 255, 0.02);
-            --border-color: rgba(255, 255, 255, 0.08);
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-        }
-
-        body, html {
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-        }
-
-        /* --- INFINITE KINETIC BACKGROUND LAYERS --- */
-        .bg-animations {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-            overflow: hidden;
-            pointer-events: none;
-        }
-
-        /* Ambient Glowing Orbs moving infinitely */
-        .orb {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(80px);
-            opacity: 0.15;
-            mix-blend-mode: screen;
-            animation: float-infinite 25s infinite alternate ease-in-out;
-        }
-
-        .orb-1 {
-            width: 400px;
-            height: 400px;
-            background: var(--primary-glow);
-            top: -10%;
-            left: -10%;
-            animation-duration: 20s;
-        }
-
-        .orb-2 {
-            width: 500px;
-            height: 500px;
-            background: var(--secondary-glow);
-            bottom: -15%;
-            right: -10%;
-            animation-duration: 28s;
-            animation-delay: -5s;
-        }
-
-        .orb-3 {
-            width: 300px;
-            height: 300px;
-            background: #7000ff;
-            top: 40%;
-            left: 50%;
-            animation-duration: 22s;
-            animation-delay: -10s;
-        }
-
-        @keyframes float-infinite {
-            0% {
-                transform: translate(0, 0) scale(1) rotate(0deg);
-            }
-            50% {
-                transform: translate(80px, 50px) scale(1.1) rotate(180deg);
-            }
-            100% {
-                transform: translate(-40px, 120px) scale(0.9) rotate(360deg);
-            }
-        }
-
-        /* --- CONTENT CONTAINMENT --- */
-        .main-container {
-            position: relative;
-            z-index: 2;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 2rem;
-            background: radial-gradient(circle at center, transparent 20%, rgba(6, 6, 8, 0.8) 85%);
-        }
-
-        .hero-card {
-            background: rgba(255, 255, 255, 0.01);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-            border: 1px solid var(--border-color);
-            border-radius: 28px;
-            padding: 3.5rem 2.5rem;
-            max-width: 480px;
-            width: 100%;
-            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.7),
-                        inset 0 1px 0 rgba(255, 255, 255, 0.05);
-        }
-
-        .hero-card h1 {
-            font-size: 2.4rem;
-            font-weight: 800;
-            letter-spacing: -0.05em;
-            margin-bottom: 0.3rem;
-            background: linear-gradient(135deg, var(--text-main) 40%, var(--text-muted));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .hero-card .subtitle {
-            font-size: 1rem;
-            color: var(--secondary-glow);
-            font-weight: 600;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            margin-bottom: 2.5rem;
-        }
-
-        .contact-form {
-            display: flex;
-            flex-direction: column;
-            gap: 1.2rem;
-            text-align: left;
-        }
-
-        .form-group {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .form-group input, 
-        .form-group textarea {
-            width: 100%;
-            padding: 0.9rem 1.1rem;
-            background: var(--form-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            color: var(--text-main);
-            font-size: 0.95rem;
-            outline: none;
-            transition: all 0.3s ease;
-        }
-
-        .form-group textarea {
-            resize: none;
-            height: 100px;
-        }
-
-        .form-group input:focus, 
-        .form-group textarea:focus {
-            border-color: var(--primary-glow);
-            box-shadow: 0 0 15px rgba(0, 242, 254, 0.15);
-            background: rgba(255, 255, 255, 0.04);
-        }
-
-        .form-group label {
-            position: absolute;
-            left: 1.1rem;
-            top: 0.9rem;
-            color: var(--text-muted);
-            transition: all 0.25s ease;
-            pointer-events: none;
-            font-size: 0.95rem;
-        }
-
-        .form-group input:focus ~ label,
-        .form-group input:not(:placeholder-shown) ~ label,
-        .form-group textarea:focus ~ label,
-        .form-group textarea:not(:placeholder-shown) ~ label {
-            top: -0.6rem;
-            left: 0.8rem;
-            font-size: 0.75rem;
-            padding: 0 0.4rem;
-            background: #0b0b0e;
-            color: var(--primary-glow);
-            border-radius: 4px;
-        }
-
-        .submit-btn {
-            margin-top: 0.5rem;
-            padding: 1rem;
-            background: linear-gradient(135deg, var(--secondary-glow), var(--primary-glow));
-            border: none;
-            border-radius: 12px;
-            color: #000000;
-            font-weight: 700;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 20px rgba(0, 242, 254, 0.2);
-        }
-
-        .submit-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 25px rgba(0, 242, 254, 0.4);
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mustapha Fathiu — Software Engineer</title>
+<meta name="description" content="Mustapha Fathiu, software engineer. Building interfaces, products, and systems that work.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Infinite CSS Background System -->
-    <div class="bg-animations">
-        <div class="orb orb-1"></div>
-        <div class="orb orb-2"></div>
-        <div class="orb orb-3"></div>
+
+<div class="grain" aria-hidden="true"></div>
+<div class="cursor-dot" aria-hidden="true"></div>
+<div class="cursor-ring" aria-hidden="true"></div>
+
+<div class="progress-track" aria-hidden="true"><div class="progress-fill" id="progressFill"></div></div>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="nav" id="nav">
+  <a href="#top" class="nav-mark">Mustapha Fathiu</a>
+  <nav class="nav-links" aria-label="Primary">
+    <a href="#work">Work</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </nav>
+  <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="mobileMenu" aria-label="Open menu">
+    <span></span><span></span>
+  </button>
+</header>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#work">Work</a>
+  <a href="#about">About</a>
+  <a href="#contact">Contact</a>
+</div>
+
+<main id="main">
+
+  <section class="hero" id="top">
+    <div class="hero-field" id="heroField" aria-hidden="true">
+      <svg id="heroSvg" viewBox="0 0 600 600" preserveAspectRatio="xMidYMid meet">
+        <path id="heroBlob" d="" fill="none" stroke="var(--accent)" stroke-width="1.1"></path>
+      </svg>
     </div>
 
-    <div class="main-container">
-        <div class="hero-card">
-            <h1>Mustapha Fathiu</h1>
-            <p class="subtitle">Software Engineer</p>
-            
-            <form class="contact-form" id="contactForm">
-                <div class="form-group">
-                    <input type="text" id="name" name="name" placeholder=" " required autocomplete="off">
-                    <label for="name">Full Name</label>
-                </div>
-                <div class="form-group">
-                    <input type="email" id="email" name="email" placeholder=" " required autocomplete="off">
-                    <label for="email">Email Address</label>
-                </div>
-                <div class="form-group">
-                    <input type="tel" id="phone" name="phone" placeholder=" " required autocomplete="off">
-                    <label for="phone">Phone Number</label>
-                </div>
-                <div class="form-group">
-                    <textarea id="message" name="message" placeholder=" " required></textarea>
-                    <label for="message">Your Message</label>
-                </div>
-                <button type="submit" class="submit-btn">Send Message</button>
-            </form>
-        </div>
+    <div class="hero-inner">
+      <p class="hero-eyebrow reveal-line" data-reveal>
+        <span class="line-draw" id="lineDraw"></span>
+        <span class="eyebrow-text">Software Engineer, Lagos</span>
+      </p>
+
+      <h1 class="hero-name" aria-label="Mustapha Fathiu">
+        <span class="split-word" data-speed="1">Mustapha</span>
+        <span class="split-word" data-speed="0.85">Fathiu</span>
+      </h1>
+
+      <p class="hero-statement">
+        <span class="split-line">I build software</span>
+        <span class="split-line">that feels <em>inevitable.</em></span>
+      </p>
+
+      <div class="hero-meta">
+        <span>Based in Lagos — open to remote</span>
+        <span class="hero-meta-divider"></span>
+        <span>Currently building Syntap</span>
+      </div>
     </div>
+
+    <div class="scroll-cue" aria-hidden="true">
+      <span>Scroll</span>
+      <span class="scroll-cue-line"></span>
+    </div>
+  </section>
+
+  <section class="intro" id="intro">
+    <p class="intro-statement" data-scramble>
+      Software engineer focused on interfaces people trust on first use, and the systems quietly holding them up.
+    </p>
+    <p class="intro-sub">
+      I move between frontend and backend as the problem requires — most recently spending more time in React, and more time thinking about what makes an interface feel obvious.
+    </p>
+  </section>
+
+  <section class="work" id="work">
+    <h2 class="section-title">Selected work</h2>
+
+    <article class="project" data-tilt>
+      <div class="project-info">
+        <span class="project-index">01</span>
+        <h3 class="project-name">Syntap</h3>
+        <p class="project-desc">An NFC-tap platform that turns a single tap into a Google review for local businesses, with QR as a fallback.</p>
+        <ul class="project-stack">
+          <li>Cloudflare Workers</li><li>D1</li><li>Vanilla JS</li>
+        </ul>
+      </div>
+      <div class="project-visual">
+        <div class="mock mock-syntap">
+          <div class="mock-card">
+            <div class="mock-nfc"></div>
+            <div class="mock-bar mock-bar-lg"></div>
+            <div class="mock-bar mock-bar-sm"></div>
+            <div class="mock-pill">Tap to review</div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <article class="project project-reverse" data-tilt>
+      <div class="project-info">
+        <span class="project-index">02</span>
+        <h3 class="project-name">Spur</h3>
+        <p class="project-desc">A short-slug URL shortener with its own routing backend, built for speed rather than borrowed off a platform.</p>
+        <ul class="project-stack">
+          <li>Cloudflare Workers</li><li>KV</li><li>Vanilla JS</li>
+        </ul>
+      </div>
+      <div class="project-visual">
+        <div class="mock mock-spur">
+          <div class="mock-input"><span>spur.link/</span><strong>x7k9</strong></div>
+          <div class="mock-arrow">→</div>
+          <div class="mock-url-full"></div>
+        </div>
+      </div>
+    </article>
+
+    <article class="project" data-tilt>
+      <div class="project-info">
+        <span class="project-index">03</span>
+        <h3 class="project-name">Platen</h3>
+        <p class="project-desc">A dependency-free QR code generator built for printing onto physical and NFC cards.</p>
+        <ul class="project-stack">
+          <li>HTML</li><li>CSS</li><li>JavaScript</li>
+        </ul>
+      </div>
+      <div class="project-visual">
+        <div class="mock mock-platen">
+          <div class="mock-qr" id="mockQr"></div>
+        </div>
+      </div>
+    </article>
+
+    <article class="project project-reverse" data-tilt>
+      <div class="project-info">
+        <span class="project-index">04</span>
+        <h3 class="project-name">Bolaji Social</h3>
+        <p class="project-desc">A Reddit-inspired social platform — communities, posts, and voting — built end to end on React and Supabase.</p>
+        <ul class="project-stack">
+          <li>React</li><li>Supabase</li><li>TanStack Query</li>
+        </ul>
+      </div>
+      <div class="project-visual">
+        <div class="mock mock-social">
+          <div class="mock-post"></div>
+          <div class="mock-post short"></div>
+          <div class="mock-vote"></div>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <section class="about" id="about">
+    <h2 class="about-statement">
+      I care about the space between an idea and the experience of using it.
+    </h2>
+    <p class="about-body">
+      Most of what I've shipped has lived on the backend — routing, auth, data. I'm moving that instinct for how systems hold together into the frontend, where the same discipline shows up as interfaces that don't make people think twice.
+    </p>
+
+    <div class="stack-list">
+      <div class="stack-row">
+        <span class="stack-label">Frontend</span>
+        <span class="stack-items">React · JavaScript · TypeScript</span>
+      </div>
+      <div class="stack-row">
+        <span class="stack-label">Backend</span>
+        <span class="stack-items">Node.js · APIs · Databases</span>
+      </div>
+      <div class="stack-row">
+        <span class="stack-label">Tools</span>
+        <span class="stack-items">Git · Cloudflare · Vercel</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <h2 class="contact-heading">Have something worth building?</h2>
+
+    <form class="contact-form" id="contactForm" novalidate>
+      <div class="field">
+        <input type="text" id="name" name="name" placeholder=" " required autocomplete="name">
+        <label for="name">Name</label>
+        <span class="field-line"></span>
+      </div>
+      <div class="field">
+        <input type="email" id="email" name="email" placeholder=" " required autocomplete="email">
+        <label for="email">Email</label>
+        <span class="field-line"></span>
+      </div>
+      <div class="field">
+        <input type="text" id="subject" name="subject" placeholder=" " autocomplete="off">
+        <label for="subject">What are you building?</label>
+        <span class="field-line"></span>
+      </div>
+      <div class="field">
+        <textarea id="message" name="message" rows="3" placeholder=" " required></textarea>
+        <label for="message">Message</label>
+        <span class="field-line"></span>
+      </div>
+
+      <button type="submit" class="submit-btn" id="submitBtn" data-magnetic>
+        <span>Send message</span>
+      </button>
+      <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
+    </form>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="footer-top">
+    <span class="footer-name">Mustapha Fathiu</span>
+    <span class="footer-role">Software Engineer — Lagos / Remote</span>
+  </div>
+  <div class="footer-links">
+    <a href="https://github.com/bolaji0" target="_blank" rel="noopener">GitHub</a>
+    <a href="https://ng.linkedin.com/in/mustapha-fathiu-7a85a422b" target="_blank" rel="noopener">LinkedIn</a>
+    <a href="mailto:hello@example.com">Email</a>
+  </div>
+  <p class="footer-bottom">© 2026 Mustapha Fathiu</p>
+</footer>
+
+<script src="script.js"></script>
 </body>
 </html>
