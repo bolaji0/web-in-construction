@@ -96,17 +96,20 @@
         <ul class="project-stack">
           <li>Cloudflare Workers</li><li>D1</li><li>Vanilla JS</li>
         </ul>
+        <span class="project-link-label">View project<svg viewBox="0 0 12 12" width="12" height="12"><path d="M2 10 L10 2 M4 2 H10 V8" fill="none" stroke="currentColor" stroke-width="1"/></svg></span>
       </div>
       <div class="project-visual">
         <div class="mock mock-syntap">
           <div class="mock-card">
-            <div class="mock-nfc">syntap.tech</div>
+            <div class="mock-nfc"></div>
             <div class="mock-bar mock-bar-lg"></div>
             <div class="mock-bar mock-bar-sm"></div>
             <div class="mock-pill">Tap to review</div>
           </div>
         </div>
       </div>
+      <!-- EDIT: replace # with the live Syntap URL -->
+      <a class="project-link-overlay" href="#" aria-label="View Syntap" target="_blank" rel="noopener"></a>
     </article>
 
     <article class="project project-reverse" data-tilt>
@@ -117,6 +120,7 @@
         <ul class="project-stack">
           <li>Cloudflare Workers</li><li>KV</li><li>Vanilla JS</li>
         </ul>
+        <span class="project-link-label">View project<svg viewBox="0 0 12 12" width="12" height="12"><path d="M2 10 L10 2 M4 2 H10 V8" fill="none" stroke="currentColor" stroke-width="1"/></svg></span>
       </div>
       <div class="project-visual">
         <div class="mock mock-spur">
@@ -125,6 +129,8 @@
           <div class="mock-url-full"></div>
         </div>
       </div>
+      <!-- EDIT: replace # with the live Spur URL -->
+      <a class="project-link-overlay" href="#" aria-label="View Spur" target="_blank" rel="noopener"></a>
     </article>
 
     <article class="project" data-tilt>
@@ -135,12 +141,15 @@
         <ul class="project-stack">
           <li>HTML</li><li>CSS</li><li>JavaScript</li>
         </ul>
+        <span class="project-link-label">View project<svg viewBox="0 0 12 12" width="12" height="12"><path d="M2 10 L10 2 M4 2 H10 V8" fill="none" stroke="currentColor" stroke-width="1"/></svg></span>
       </div>
       <div class="project-visual">
         <div class="mock mock-platen">
           <div class="mock-qr" id="mockQr"></div>
         </div>
       </div>
+      <!-- EDIT: replace # with the live Platen URL -->
+      <a class="project-link-overlay" href="https://fathiu.com/qr-code/" aria-label="View Platen" target="_blank" rel="noopener"></a>
     </article>
 
     <article class="project project-reverse" data-tilt>
@@ -151,6 +160,7 @@
         <ul class="project-stack">
           <li>React</li><li>Supabase</li><li>TanStack Query</li>
         </ul>
+        <span class="project-link-label">View project<svg viewBox="0 0 12 12" width="12" height="12"><path d="M2 10 L10 2 M4 2 H10 V8" fill="none" stroke="currentColor" stroke-width="1"/></svg></span>
       </div>
       <div class="project-visual">
         <div class="mock mock-social">
@@ -159,6 +169,8 @@
           <div class="mock-vote"></div>
         </div>
       </div>
+      <!-- Live: Bolaji Social on Netlify -->
+      <a class="project-link-overlay" href="https://bolaji-social-app.netlify.app" aria-label="View Bolaji Social" target="_blank" rel="noopener"></a>
     </article>
   </section>
 
@@ -189,7 +201,13 @@
   <section class="contact" id="contact">
     <h2 class="contact-heading">Have something worth building?</h2>
 
-    <form action="https://formsubmit.co/bjmustapha48@gmail.com" method="POST" class="contact-form" id="" novalidate>
+    <!-- EDIT: replace your@email.com with your real address -->
+    <form class="contact-form" id="contactForm" action="https://formsubmit.co/bjmustapha48@gmail.com" method="POST" novalidate>
+      <!-- EDIT: change _next to your deployed thank-you.html URL once live -->
+      <input type="hidden" name="_next" value="thank-you.html">
+      <input type="hidden" name="_subject" value="New message from your portfolio">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
       <div class="field">
         <input type="text" id="name" name="name" placeholder=" " required autocomplete="name">
         <label for="name">Name</label>
