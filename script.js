@@ -239,20 +239,18 @@
   function initForm() {
     const form = document.getElementById('contactForm');
     const status = document.getElementById('formStatus');
+    const btn = document.getElementById('submitBtn');
     if (!form) return;
 
     form.addEventListener('submit', (e) => {
-      e.preventDefault();
-
       if (!form.checkValidity()) {
+        e.preventDefault();
         status.textContent = 'Please fill in your name, email, and message.';
         return;
       }
-
-      // CONNECT YOUR FORM SUBMISSION LOGIC HERE
-      // e.g. fetch('/api/contact', { method: 'POST', body: new FormData(form) })
-
-      status.textContent = 'Form ready — connect a submission endpoint to send this.';
+      // Valid — let the form submit to FormSubmit (see action="" above).
+      status.textContent = 'Sending…';
+      btn.disabled = true;
     });
   }
 
