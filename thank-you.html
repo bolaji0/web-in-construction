@@ -1,1 +1,57 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Message sent — Mustapha Fathiu</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="grain" aria-hidden="true"></div>
+
+<section class="ty-screen">
+  <a href="index.html" class="ty-mark">Mustapha Fathiu</a>
+
+  <div class="ty-inner">
+    <span class="ty-check" aria-hidden="true">
+      <svg viewBox="0 0 40 40" width="40" height="40">
+        <circle cx="20" cy="20" r="19" fill="none" stroke="currentColor" stroke-width="1"/>
+        <path d="M12 20.5 L17.5 26 L28.5 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </span>
+
+    <h1 class="ty-heading">Message sent.</h1>
+    <p class="ty-body">
+      Thanks for reaching out — I read every message myself and will get back to you shortly.
+    </p>
+
+    <p class="ty-redirect">
+      Taking you back in <span id="tyCount">5</span>s — or
+      <a href="index.html">return now</a>.
+    </p>
+  </div>
+</section>
+
+<script>
+  (function () {
+    var seconds = 5;
+    var el = document.getElementById('tyCount');
+    var timer = setInterval(function () {
+      seconds -= 1;
+      if (el) el.textContent = String(Math.max(seconds, 0));
+      if (seconds <= 0) {
+        clearInterval(timer);
+        window.location.href = 'index.html';
+      }
+    }, 1000);
+  })();
+</script>
+
+</body>
+</html>
