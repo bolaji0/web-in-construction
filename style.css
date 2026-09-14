@@ -420,6 +420,7 @@ body.using-mouse a, body.using-mouse button { cursor: none; }
 }
 
 .project {
+  position: relative;
   display: grid;
   grid-template-columns: 0.85fr 1.15fr;
   gap: clamp(32px, 5vw, 80px);
@@ -430,6 +431,25 @@ body.using-mouse a, body.using-mouse button { cursor: none; }
 .project:last-child { border-bottom: 1px solid var(--border); }
 .project-reverse { direction: rtl; }
 .project-reverse > * { direction: ltr; }
+
+.project-link-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+}
+
+.project-link-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--ink);
+  opacity: 0;
+  transform: translateX(-6px);
+  transition: opacity 0.3s var(--ease-soft), transform 0.3s var(--ease-soft);
+}
+.project-link-label svg { color: var(--accent); }
+.project:hover .project-link-label { opacity: 1; transform: translateX(0); }
 
 .project-index {
   display: block;
@@ -804,8 +824,69 @@ body.using-mouse a, body.using-mouse button { cursor: none; }
 }
 
 /* ============================================================
-   RESPONSIVE
+   THANK YOU PAGE
    ============================================================ */
+.ty-screen {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(24px, 6vw, 96px);
+}
+.ty-mark {
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 500;
+}
+.ty-inner {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  max-width: 560px;
+}
+.ty-check {
+  color: var(--accent);
+  margin-bottom: 28px;
+  opacity: 0;
+  transform: scale(0.85);
+  animation: tyPop 0.6s var(--ease) 0.1s forwards;
+}
+@keyframes tyPop {
+  to { opacity: 1; transform: scale(1); }
+}
+.ty-heading {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(32px, 5.6vw, 56px);
+  margin: 0 0 20px;
+  letter-spacing: -0.01em;
+  opacity: 0;
+  transform: translateY(16px);
+  animation: fadeUp 0.7s var(--ease) 0.25s forwards;
+}
+.ty-body {
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--ink-soft);
+  margin: 0 0 36px;
+  opacity: 0;
+  transform: translateY(16px);
+  animation: fadeUp 0.7s var(--ease) 0.4s forwards;
+}
+.ty-redirect {
+  font-size: 13px;
+  color: var(--ink-soft);
+  opacity: 0;
+  animation: fadeUp 0.7s var(--ease) 0.55s forwards;
+}
+.ty-redirect a {
+  color: var(--ink);
+  border-bottom: 1px solid var(--ink);
+}
+.ty-redirect #tyCount {
+  font-variant-numeric: tabular-nums;
+}
 @media (max-width: 860px) {
   .nav-links { display: none; }
   .nav-toggle { display: block; }
