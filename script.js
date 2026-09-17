@@ -234,7 +234,7 @@
   }
 
   /* ============================================================
-     CONTACT FORM — no submission logic, placeholder only
+     CONTACT FORM — validates, then hands off to the form action
      ============================================================ */
   function initForm() {
     const form = document.getElementById('contactForm');
@@ -248,9 +248,10 @@
         status.textContent = 'Please fill in your name, email, and message.';
         return;
       }
-      // Valid — let the form submit to FormSubmit (see action="" above).
+      // Valid — allow the native POST to the form's action.
       status.textContent = 'Sending…';
       btn.disabled = true;
+      btn.style.transform = ''; // release any magnetic offset before it locks
     });
   }
 
