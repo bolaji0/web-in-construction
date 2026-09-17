@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,38 +8,137 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&family=Inter:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="thanks.css">
 </head>
 <body>
 
 <div class="grain" aria-hidden="true"></div>
+<div class="cursor-dot" aria-hidden="true"></div>
+<div class="cursor-ring" aria-hidden="true"></div>
 
 <section class="ty-screen">
   <a href="index.html" class="ty-mark">Mustapha Fathiu</a>
 
+  <div class="ty-field" aria-hidden="true">
+    <svg viewBox="0 0 400 400" preserveAspectRatio="xMidYMid meet">
+      <path id="tyBlob" fill="none" stroke="var(--accent)" stroke-width="1"></path>
+    </svg>
+  </div>
+
   <div class="ty-inner">
+    <p class="ty-eyebrow">
+      <span class="line-draw"></span>
+      <span class="eyebrow-text">Thank you</span>
+    </p>
+
     <span class="ty-check" aria-hidden="true">
       <svg viewBox="0 0 40 40" width="40" height="40">
-        <circle cx="20" cy="20" r="19" fill="none" stroke="currentColor" stroke-width="1"/>
-        <path d="M12 20.5 L17.5 26 L28.5 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle class="ty-check-ring" cx="20" cy="20" r="19" fill="none" stroke="currentColor" stroke-width="1"/>
+        <path class="ty-check-mark" d="M12 20.5 L17.5 26 L28.5 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
     </span>
 
-    <h1 class="ty-heading">Message sent.</h1>
+    <h1 class="ty-heading">
+      <span class="split-line">Message sent.</span>
+    </h1>
     <p class="ty-body">
-      Thanks for reaching out — I read every message myself and will get back to you shortly.
+      I read every message myself — thanks for reaching out, I'll get back to you shortly.
     </p>
 
     <p class="ty-redirect">
-      Taking you back in <span id="tyCount">5</span>s — or
-      <a href="index.html">return now</a>.
+      Taking you back in <span id="tyCount">3</span>s
     </p>
   </div>
 </section>
 
 <script>
   (function () {
-    var seconds = 5;
+    var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var isTouch = window.matchMedia('(hover: none), (pointer: coarse)').matches;
+
+    /* checkmark — draw the stroke in rather than pop */
+    var ring = document.querySelector('.ty-check-ring');
+    var mark = document.querySelector('.ty-check-mark');
+    [ring, mark].forEach(function (el) {
+      if (!el) return;
+      var len = el.getTotalLength();
+      el.style.strokeDasharray = len;
+      el.style.strokeDashoffset = len;
+    });
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+        if (ring) ring.style.transition = 'stroke-dashoffset 0.6s cubic-bezier(0.16,1,0.3,1) 0.15s';
+        if (mark) mark.style.transition = 'stroke-dashoffset 0.45s cubic-bezier(0.16,1,0.3,1) 0.55s';
+        if (ring) ring.style.strokeDashoffset = 0;
+        if (mark) mark.style.strokeDashoffset = 0;
+      });
+    });
+
+    /* ambient blob — same gentle system as the homepage hero */
+    var path = document.getElementById('tyBlob');
+    if (path) {
+      var points = 7, radius = 130, cx = 200, cy = 200, t = 0;
+
+      function blobPath(offset, wobble) {
+        var pts = [];
+        for (var i = 0; i < points; i++) {
+          var angle = (i / points) * Math.PI * 2;
+          var noise = Math.sin(angle * 3 + offset) * wobble + Math.cos(angle * 2 - offset * 0.7) * (wobble * 0.6);
+          var r = radius + noise;
+          pts.push([cx + Math.cos(angle) * r, cy + Math.sin(angle) * r]);
+        }
+        var d = 'M ' + pts[0][0] + ' ' + pts[0][1] + ' ';
+        for (var j = 0; j < points; j++) {
+          var p0 = pts[(j - 1 + points) % points];
+          var p1 = pts[j];
+          var p2 = pts[(j + 1) % points];
+          var p3 = pts[(j + 2) % points];
+          var c1x = p1[0] + (p2[0] - p0[0]) / 6;
+          var c1y = p1[1] + (p2[1] - p0[1]) / 6;
+          var c2x = p2[0] - (p3[0] - p1[0]) / 6;
+          var c2y = p2[1] - (p3[1] - p1[1]) / 6;
+          d += 'C ' + c1x + ' ' + c1y + ', ' + c2x + ' ' + c2y + ', ' + p2[0] + ' ' + p2[1] + ' ';
+        }
+        return d + 'Z';
+      }
+
+      function animateBlob() {
+        t += 0.004;
+        path.setAttribute('d', blobPath(t * 10, 14));
+        if (!prefersReducedMotion) requestAnimationFrame(animateBlob);
+      }
+      if (prefersReducedMotion) {
+        path.setAttribute('d', blobPath(0, 14));
+      } else {
+        requestAnimationFrame(animateBlob);
+      }
+    }
+
+    /* custom cursor — same feel as the homepage */
+    if (!isTouch) {
+      document.body.classList.add('using-mouse');
+      var dot = document.querySelector('.cursor-dot');
+      var ringCursor = document.querySelector('.cursor-ring');
+      var mx = window.innerWidth / 2, my = window.innerHeight / 2, rx = mx, ry = my;
+
+      window.addEventListener('mousemove', function (e) {
+        mx = e.clientX; my = e.clientY;
+        dot.style.transform = 'translate(' + mx + 'px,' + my + 'px) translate(-50%,-50%)';
+      });
+      (function loop() {
+        rx += (mx - rx) * 0.18;
+        ry += (my - ry) * 0.18;
+        ringCursor.style.transform = 'translate(' + rx + 'px,' + ry + 'px) translate(-50%,-50%)';
+        requestAnimationFrame(loop);
+      })();
+      document.querySelectorAll('a').forEach(function (el) {
+        el.addEventListener('mouseenter', function () { ringCursor.classList.add('is-link'); });
+        el.addEventListener('mouseleave', function () { ringCursor.classList.remove('is-link'); });
+      });
+    }
+
+    /* redirect countdown */
+    var seconds = 3;
     var el = document.getElementById('tyCount');
     var timer = setInterval(function () {
       seconds -= 1;
