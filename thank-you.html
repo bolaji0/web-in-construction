@@ -52,6 +52,20 @@
 </section>
 
 <script>
+
+    /* redirect countdown */
+    var seconds = 3;
+    var el = document.getElementById('tyCount');
+    var timer = setInterval(function () {
+      seconds -= 1;
+      if (el) el.textContent = String(Math.max(seconds, 0));
+      if (seconds <= 0) {
+        clearInterval(timer);
+        window.location.href = 'https://fathiu.com/';
+      }
+    }, 1000);
+
+
   (function () {
     var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var isTouch = window.matchMedia('(hover: none), (pointer: coarse)').matches;
